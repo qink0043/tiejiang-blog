@@ -1,62 +1,6 @@
-<script setup lang="ts">
-import {
-  CodeBracketIcon,
-  ServerIcon,
-  CpuChipIcon,
-  CommandLineIcon,
-} from '@heroicons/vue/24/outline'
-
-const stack = [
-  {
-    name: 'Frontend / Node.js',
-    level: '90%',
-    desc: 'Vue 3 / React / Infrastructure',
-    icon: CodeBracketIcon,
-  },
-  {
-    name: 'Systems / Go',
-    level: '85%',
-    desc: 'Distributed Systems / CLI / Perf',
-    icon: ServerIcon,
-  },
-  {
-    name: 'Infrastructure',
-    level: '80%',
-    desc: 'Docker / K8s / CI-CD',
-    icon: CpuChipIcon,
-  },
-  {
-    name: 'DevOps',
-    level: '75%',
-    desc: 'Automation / Security / Monitoring',
-    icon: CommandLineIcon,
-  },
-]
-
-const principles = [
-  {
-    id: '01',
-    title: 'EQUALITY_OF_LOGIC',
-    content:
-      '逻辑的严密性高于表现层的华丽。任何无法被推导的组件都是系统的负债。',
-  },
-  {
-    id: '02',
-    title: 'MINIMALIST_OVERHEAD',
-    content: '追求极低的心智负担与系统开销。奥卡姆剃刀原则在工程中同样适用。',
-  },
-  {
-    id: '03',
-    title: 'TRUTH_IN_CODE',
-    content: '代码即事实。文档应仅作为推理的辅助，而非真理的来源。',
-  },
-]
-</script>
-
 <template>
   <div class="px-6 lg:px-12 pt-40 pb-40 min-h-screen">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-      <!-- Profile Header Side -->
       <div class="lg:col-span-4 space-y-12 animate-reveal">
         <div class="relative group">
           <div
@@ -88,7 +32,6 @@ const principles = [
         </div>
       </div>
 
-      <!-- Description and Stack -->
       <div class="lg:col-span-8 space-y-24">
         <section class="max-w-2xl space-y-8 animate-content-fade">
           <h2
@@ -99,7 +42,7 @@ const principles = [
           <p
             class="text-xl font-medium leading-relaxed italic text-primary-800 dark:text-primary-200"
           >
-            我不关注“赋能”，我只关注代码的执行效率。我是铁匠，在二进制的熔炉中锻造稳健的系统内核与高性能前端。
+            占位文字
           </p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div v-for="item in stack" :key="item.name" class="space-y-3">
@@ -160,3 +103,58 @@ const principles = [
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import {
+  CodeBracketIcon,
+  ServerIcon,
+  CpuChipIcon,
+  CommandLineIcon,
+} from '@heroicons/vue/24/outline'
+
+const stack = [
+  {
+    name: 'Frontend / Node.js',
+    level: '90%',
+    desc: 'Vue 3 / React / Infrastructure',
+    icon: CodeBracketIcon,
+  },
+  {
+    name: 'Systems / Go',
+    level: '85%',
+    desc: 'Distributed Systems / CLI / Perf',
+    icon: ServerIcon,
+  },
+  {
+    name: 'Infrastructure',
+    level: '80%',
+    desc: 'Docker / K8s / CI-CD',
+    icon: CpuChipIcon,
+  },
+  {
+    name: 'DevOps',
+    level: '75%',
+    desc: 'Automation / Security / Monitoring',
+    icon: CommandLineIcon,
+  },
+]
+
+const principles = [
+  {
+    id: '01',
+    title: 'EQUALITY_OF_LOGIC',
+    content:
+      '逻辑的严密性高于表现层的华丽。任何无法被推导的组件都是系统的负债。',
+  },
+  {
+    id: '02',
+    title: 'MINIMALIST_OVERHEAD',
+    content: '追求极低的心智负担与系统开销。奥卡姆剃刀原则在工程中同样适用。',
+  },
+  {
+    id: '03',
+    title: 'TRUTH_IN_CODE',
+    content: '代码即事实。文档应仅作为推理的辅助，而非真理的来源。',
+  },
+]
+</script>

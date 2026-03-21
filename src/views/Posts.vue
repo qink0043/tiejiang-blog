@@ -1,30 +1,3 @@
-<script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useBlogStore } from '../stores/blog'
-import PostCard from '../components/PostCard.vue'
-import { MagnifyingGlassIcon, ArchiveBoxIcon } from '@heroicons/vue/24/outline'
-
-const blogStore = useBlogStore()
-const searchQuery = ref('')
-const selectedCategory = ref('All')
-
-const categories = computed(() => {
-  return ['All', ...Object.keys(blogStore.postsByCategory)]
-})
-
-const filteredPosts = computed(() => {
-  return blogStore.posts.filter((post) => {
-    const matchesSearch =
-      post.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      post.summary.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchesCategory =
-      selectedCategory.value === 'All' ||
-      post.category === selectedCategory.value
-    return matchesSearch && matchesCategory
-  })
-})
-</script>
-
 <template>
   <div class="px-6 lg:px-12 pt-40 pb-40 min-h-screen">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
@@ -118,3 +91,29 @@ const filteredPosts = computed(() => {
     </div>
   </div>
 </template>
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import { useBlogStore } from '../stores/blog'
+import PostCard from '../components/PostCard.vue'
+import { MagnifyingGlassIcon, ArchiveBoxIcon } from '@heroicons/vue/24/outline'
+
+const blogStore = useBlogStore()
+const searchQuery = ref('')
+const selectedCategory = ref('All')
+
+const categories = computed(() => {
+  return ['All', ...Object.keys(blogStore.postsByCategory)]
+})
+
+const filteredPosts = computed(() => {
+  return blogStore.posts.filter((post) => {
+    const matchesSearch =
+      post.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      post.summary.toLowerCase().includes(searchQuery.value.toLowerCase())
+    const matchesCategory =
+      selectedCategory.value === 'All' ||
+      post.category === selectedCategory.value
+    return matchesSearch && matchesCategory
+  })
+})
+</script>

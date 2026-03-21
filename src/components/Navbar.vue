@@ -1,54 +1,6 @@
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import {
-  SunIcon,
-  MoonIcon,
-  Bars3Icon,
-  XMarkIcon,
-} from '@heroicons/vue/24/outline'
-
-const router = useRouter()
-const isDark = ref(false)
-const isMobileMenuOpen = ref(false)
-const isScrolled = ref(false)
-
-const toggleDarkMode = () => {
-  isDark.value = !isDark.value
-  if (isDark.value) {
-    document.documentElement.classList.add('dark')
-    localStorage.setItem('theme', 'dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-    localStorage.setItem('theme', 'light')
-  }
-}
-
-const navLinks = [
-  { name: '[ HOME ]', path: '/' },
-  { name: '[ POSTS ]', path: '/posts' },
-  { name: '[ ABOUT ]', path: '/about' },
-]
-
-onMounted(() => {
-  const savedTheme = localStorage.getItem('theme')
-  if (
-    savedTheme === 'dark' ||
-    (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  ) {
-    isDark.value = true
-    document.documentElement.classList.add('dark')
-  }
-
-  window.addEventListener('scroll', () => {
-    isScrolled.value = window.scrollY > 20
-  })
-})
-</script>
-
 <template>
   <nav
-    class="fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-smooth"
+    class="max-w-7xl mx-auto fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-smooth"
     :class="[
       isScrolled
         ? 'bg-white/90 dark:bg-primary-950/90 py-2 border-b border-primary-200 dark:border-primary-800'
@@ -69,16 +21,6 @@ onMounted(() => {
               class="relative z-10 font-black text-xl italic transition-colors group-hover:text-white"
             >
               F
-            </span>
-          </div>
-          <div class="flex flex-col -space-y-1">
-            <span class="text-xl font-black uppercase tracking-tighter italic">
-              Forge_Blog
-            </span>
-            <span
-              class="text-[8px] font-mono font-bold tracking-[0.3em] text-accent uppercase"
-            >
-              System.Protocol.v1
             </span>
           </div>
         </router-link>
@@ -157,3 +99,51 @@ onMounted(() => {
     </div>
   </nav>
 </template>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import {
+  SunIcon,
+  MoonIcon,
+  Bars3Icon,
+  XMarkIcon,
+} from '@heroicons/vue/24/outline'
+
+const router = useRouter()
+const isDark = ref(false)
+const isMobileMenuOpen = ref(false)
+const isScrolled = ref(false)
+
+const toggleDarkMode = () => {
+  isDark.value = !isDark.value
+  if (isDark.value) {
+    document.documentElement.classList.add('dark')
+    localStorage.setItem('theme', 'dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+    localStorage.setItem('theme', 'light')
+  }
+}
+
+const navLinks = [
+  { name: '[ 首页 ]', path: '/' },
+  { name: '[ 博客 ]', path: '/posts' },
+  { name: '[ 留言板 ]', path: '/message' },
+  { name: '[ 关于 ]', path: '/about' },
+]
+
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme')
+  if (
+    savedTheme === 'dark' ||
+    (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  ) {
+    isDark.value = true
+    document.documentElement.classList.add('dark')
+  }
+
+  window.addEventListener('scroll', () => {
+    isScrolled.value = window.scrollY > 20
+  })
+})
+</script>

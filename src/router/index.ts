@@ -5,25 +5,35 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'Home',
     component: () => import('../views/Home.vue'),
-    meta: { title: '首页 - 铁匠博客' },
+    meta: { title: '首页' },
   },
   {
     path: '/posts',
     name: 'Posts',
     component: () => import('../views/Posts.vue'),
-    meta: { title: '文章列表 - 铁匠博客' },
+    meta: { title: '文章列表' },
   },
   {
     path: '/post/:id',
     name: 'PostDetail',
     component: () => import('../views/PostDetail.vue'),
-    meta: { title: '正在阅读 - 铁匠博客' },
+    meta: { title: '正在阅读' },
   },
   {
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue'),
-    meta: { title: '关于我 - 铁匠博客' },
+    meta: { title: '关于我' },
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('../views/404.vue'),
+    meta: { title: '404' },
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404',
   },
 ]
 

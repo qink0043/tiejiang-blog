@@ -1,21 +1,3 @@
-<script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { useBlogStore } from '../stores/blog'
-import { renderMarkdown } from '../utils/markdown'
-import {
-  CalendarIcon,
-  ClockIcon,
-  UserIcon,
-  ArrowLeftIcon,
-  ShareIcon,
-  BookmarkIcon,
-} from '@heroicons/vue/24/outline'
-
-const route = useRoute()
-const blogStore = useBlogStore()
-const post = blogStore.getPostById(route.params.id as string)
-</script>
-
 <template>
   <div v-if="post" class="pt-32 pb-40 animate-fade-in relative">
     <!-- Back to Articles -->
@@ -161,3 +143,20 @@ const post = blogStore.getPostById(route.params.id as string)
     </div>
   </div>
 </template>
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
+import { useBlogStore } from '../stores/blog'
+import { renderMarkdown } from '../utils/markdown'
+import {
+  CalendarIcon,
+  ClockIcon,
+  UserIcon,
+  ArrowLeftIcon,
+  ShareIcon,
+  BookmarkIcon,
+} from '@heroicons/vue/24/outline'
+
+const route = useRoute()
+const blogStore = useBlogStore()
+const post = blogStore.getPostById(route.params.id as string)
+</script>
