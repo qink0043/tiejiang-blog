@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-main: #f6f7f9;
+    --text-main: #1e252e;
+  }
+
+  .dark {
+    --bg-main: #12161b;
+    --text-main: #eceef2;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    @apply transition-none;
+  }
+
+  body {
+    @apply bg-[var(--bg-main)] text-[var(--text-main)] overflow-x-hidden relative;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* 噪点纹理叠加层 */
+  body::before {
+    content: "";
+    @apply fixed inset-0 z-[100] pointer-events-none opacity-[0.03] dark:opacity-[0.05] bg-noise;
+  }
+
+  /* 非对称网格背景 */
+  body::after {
+    content: "";
+    @apply fixed inset-0 z-[-1] pointer-events-none bg-grid-pattern bg-[length:40px_40px] opacity-[0.05] dark:opacity-[0.1];
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-bold tracking-tight text-balance;
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+@layer components {
+  /* “铁锈与岩石” 渐变逻辑 */
+  .text-raw {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-primary-900 to-accent dark:from-white dark:to-accent-light;
+  }
+
+  /* 彻底打破三卡片布局的容器 */
+  .layout-asymmetric {
+    @apply grid grid-cols-1 lg:grid-cols-12 gap-8 items-start;
+  }
+
+  /* 噪点质感按钮 - 弃用线性平滑 */
+  .btn-action {
+    @apply relative inline-flex items-center gap-3 px-8 py-4 rounded-none font-bold text-sm uppercase tracking-widest
+      bg-primary-950 text-white dark:bg-white dark:text-primary-950
+      shadow-[8px_8px_0_0_rgba(255,87,51,0.3)]
+      hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]
+      transition-all duration-300 ease-smooth active:scale-95;
+  }
+
+  /* 工业感边框卡片 */
+  .card-raw {
+    @apply p-8 bg-white dark:bg-primary-900/40 border border-primary-200 dark:border-primary-800
+      relative transition-all duration-500 ease-smooth
+      hover:border-accent hover:shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.1)];
+  }
+
+  /* 文章排版微调 */
+  .prose {
+    @apply max-w-none prose-slate dark:prose-invert;
+    --tw-prose-body: theme('colors.primary.700');
+    --tw-prose-headings: theme('colors.primary.950');
+    @apply lg:pl-12 border-l-2 border-primary-100 dark:border-primary-800;
+  }
+
+  /* 自定义滚动条 - 噪点化 */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { @apply bg-transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-primary-300 dark:bg-primary-700; }
+}
+
+@layer utilities {
+  .skew-slight { transform: skewX(-2deg); }
+  .no-center { text-align: left; margin-left: 0; }
+}
