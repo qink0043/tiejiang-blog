@@ -50,10 +50,17 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useBlogStore } from '../stores/blog'
-import PostCard from '../components/PostCard.vue'
+import { getPostsListApi } from '@/api/modules/posts'
+import PostCard from '@/components/PostCard/PostCard.vue'
 import { ArrowRightIcon } from '@heroicons/vue/24/outline'
+import { onMounted, ref } from 'vue'
+import type { PostInfo } from '@/types/post'
 
-const blogStore = useBlogStore()
-const recentPosts = blogStore.posts.slice(0, 4)
+const recentPosts = ref<PostInfo[]>([])
+
+onMounted(async () => {
+  const res = await getPostsListApi({ page: 1, pageSize: 4 })
+  recentPosts.value = res?.data?.slice(0, 4) || []
+  console.log(recentPosts.value)
+})
 </script>

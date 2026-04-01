@@ -1,119 +1,105 @@
 <template>
-  <div class="px-6 lg:px-12 pt-40 pb-40 min-h-screen">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-      <!-- Sidebar Filters: Break Symmetry -->
-      <aside class="lg:col-span-3 space-y-12 animate-reveal">
-        <header class="space-y-4">
-          <div
-            class="text-[10px] font-black tracking-[0.4em] text-accent uppercase italic"
-          >
-            System_Index
-          </div>
-          <h1 class="text-5xl font-black italic uppercase italic leading-none">
-            Log
-            <br />
-            Archive.
-          </h1>
-          <p
-            class="text-xs font-mono text-primary-400 leading-relaxed pt-4 border-t border-primary-100 dark:border-primary-800"
-          >
-            [STATUS: STABLE]
-            <br />
-            [ENTRIES: {{ blogStore.posts.length }}]
-            <br />
-            针对内核演进、架构设计及生产环境调试的离散记录。
-          </p>
-        </header>
+  <!-- 页面主体容器：左右分栏 -->
+  <div class="max-w-7xl mx-auto px-8 py-28 flex items-start gap-16">
+    <!-- ==================== 左侧侧边栏 ==================== -->
+    <aside class="w-1/4 sticky top-12">
+      <h1 class="text-sm font-black italic tracking-widest text-[#B49579] mb-4">
+        SYSTEM_INDEX
+      </h1>
+      <h2 class="text-6xl font-black italic tracking-tighter mb-12">
+        LOG
+        <br />
+        ARCHIVE.
+      </h2>
 
-        <!-- Search input -->
-        <div class="relative">
-          <input
-            v-model="searchQuery"
-            type="text"
-            placeholder="SEARCH_KEYWORD..."
-            class="w-full bg-transparent border-b-2 border-primary-200 dark:border-primary-800 py-4 font-black uppercase text-sm outline-none focus:border-accent transition-colors"
-          />
-          <MagnifyingGlassIcon
-            class="w-4 h-4 absolute right-0 top-1/2 -translate-y-1/2 text-primary-400"
-          />
-        </div>
+      <!-- 搜索框 -->
+      <div class="relative border-b border-gray-200 pb-2 mb-12">
+        <input
+          type="text"
+          placeholder="SEARCH_KEYWORD..."
+          class="w-full bg-transparent text-sm font-bold text-gray-700 placeholder-gray-400 focus:outline-none uppercase"
+        />
+        <!-- 搜索图标占位 -->
+        <span class="absolute right-0 top-0 text-gray-300">🔍</span>
+      </div>
 
-        <!-- Category Menu -->
-        <nav class="flex flex-col gap-4">
-          <button
-            v-for="cat in categories"
-            :key="cat"
-            @click="selectedCategory = cat"
-            class="group flex items-center justify-between text-left transition-all"
-          >
-            <span
-              :class="[
-                'text-xs font-black uppercase tracking-widest',
-                selectedCategory === cat
-                  ? 'text-accent border-b-2 border-accent'
-                  : 'text-primary-400 hover:text-primary-950 dark:hover:text-white',
-              ]"
-            >
-              {{ cat }}
-            </span>
-            <span
-              v-if="selectedCategory === cat"
-              class="w-2 h-2 bg-accent opacity-50"
-            ></span>
-          </button>
-        </nav>
-      </aside>
-
-      <!-- Main Content: Posts -->
-      <main class="lg:col-span-9">
-        <transition-group
-          tag="div"
-          enter-active-class="animate-reveal"
-          class="grid grid-cols-1 md:grid-cols-2 gap-8"
-        >
-          <PostCard v-for="post in filteredPosts" :key="post.id" :post="post" />
-        </transition-group>
-
-        <!-- No Results -->
+      <!-- 分类列表 -->
+      <div class="flex flex-col gap-4">
+        <!-- 激活状态的分类 -->
         <div
-          v-if="filteredPosts.length === 0"
-          class="py-40 opacity-20 text-left"
+          class="flex justify-between items-center border-b border-[#B49579] pb-2 cursor-pointer text-[#B49579]"
         >
-          <ArchiveBoxIcon class="w-32 h-32 stroke-[0.5] mb-8" />
-          <h3 class="text-4xl font-black italic uppercase">
-            Null_Pointer_Exception
-          </h3>
-          <p class="font-mono text-sm">
-            未能匹配到任何加密存档，请校对输入参数。
-          </p>
+          <span class="text-sm font-bold uppercase">All</span>
+          <span class="w-2 h-2 bg-[#B49579]"></span>
         </div>
-      </main>
-    </div>
+        <!-- 未激活状态的分类 -->
+        <div
+          class="flex items-center gap-2 pb-2 cursor-pointer text-gray-400 hover:text-black transition-colors group"
+        >
+          <span
+            class="text-sm font-bold uppercase group-hover:translate-x-1 transition-transform"
+          >
+            Frontend
+          </span>
+          <span class="text-xs font-mono ml-auto">12</span>
+        </div>
+        <div
+          class="flex items-center gap-2 pb-2 cursor-pointer text-gray-400 hover:text-black transition-colors group"
+        >
+          <span
+            class="text-sm font-bold uppercase group-hover:translate-x-1 transition-transform"
+          >
+            Life Log
+          </span>
+          <span class="text-xs font-mono ml-auto">05</span>
+        </div>
+      </div>
+
+      <!-- 标签云 -->
+      <div class="mt-12 flex flex-wrap gap-2">
+        <span
+          class="border border-gray-200 text-gray-500 text-xs px-3 py-1 cursor-pointer hover:bg-black hover:text-white hover:border-black transition-all"
+        >
+          #Vue3
+        </span>
+        <span
+          class="border border-gray-200 text-gray-500 text-xs px-3 py-1 cursor-pointer hover:bg-black hover:text-white hover:border-black transition-all"
+        >
+          #Tailwind
+        </span>
+        <span
+          class="border border-gray-200 text-gray-500 text-xs px-3 py-1 cursor-pointer hover:bg-black hover:text-white hover:border-black transition-all"
+        >
+          #Design
+        </span>
+      </div>
+    </aside>
+
+    <!-- ==================== 右侧文章列表 ==================== -->
+    <main class="w-3/4 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-16 mt-32">
+      <template v-for="post in postList">
+        <PostCard :post="post" />
+      </template>
+    </main>
   </div>
 </template>
+
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useBlogStore } from '../stores/blog'
-import PostCard from '../components/PostCard.vue'
-import { MagnifyingGlassIcon, ArchiveBoxIcon } from '@heroicons/vue/24/outline'
+import { getPostsListApi } from '@/api/modules/posts'
+import type { PostInfo } from '@/types/post'
+import { onMounted, ref } from 'vue'
+import PostCard from '@/components/PostCard/PostCard.vue'
 
-const blogStore = useBlogStore()
-const searchQuery = ref('')
-const selectedCategory = ref('All')
+const postList = ref<PostInfo[]>()
 
-const categories = computed(() => {
-  return ['All', ...Object.keys(blogStore.postsByCategory)]
-})
+onMounted(async () => {
+  console.log('列表组件挂载')
 
-const filteredPosts = computed(() => {
-  return blogStore.posts.filter((post) => {
-    const matchesSearch =
-      post.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      post.summary.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchesCategory =
-      selectedCategory.value === 'All' ||
-      post.category === selectedCategory.value
-    return matchesSearch && matchesCategory
-  })
+  try {
+    const res = await getPostsListApi({})
+
+    postList.value = res.items
+    console.log(postList.value)
+  } catch {}
 })
 </script>

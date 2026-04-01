@@ -1,27 +1,20 @@
 <template>
   <nav
-    class="max-w-7xl mx-auto fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-smooth"
+    class="w-full mx-auto fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-smooth"
     :class="[
       isScrolled
         ? 'bg-white/90 dark:bg-primary-950/90 py-2 border-b border-primary-200 dark:border-primary-800'
         : 'bg-transparent py-8',
     ]"
   >
-    <div class="px-6 lg:px-12">
+    <div class="lg:px-12 max-w-7xl mx-auto">
       <div class="flex justify-between items-center">
         <!-- Logo: Asymmetric & Industrial -->
         <router-link to="/" class="group flex items-center gap-4">
           <div
-            class="w-10 h-10 border-2 border-primary-950 dark:border-white relative overflow-hidden flex items-center justify-center"
+            class="text-2xl font-bold tracking-wider transition-all duration-300 ease-smooth hover:text-accent group-hover:-translate-y-1"
           >
-            <div
-              class="absolute inset-0 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            ></div>
-            <span
-              class="relative z-10 font-black text-xl italic transition-colors group-hover:text-white"
-            >
-              F
-            </span>
+            老铁匠
           </div>
         </router-link>
 

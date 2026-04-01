@@ -144,8 +144,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { useBlogStore } from '../stores/blog'
 import { renderMarkdown } from '../utils/markdown'
 import {
   CalendarIcon,
@@ -155,8 +153,8 @@ import {
   ShareIcon,
   BookmarkIcon,
 } from '@heroicons/vue/24/outline'
+import { ref } from 'vue'
+import type { PostInfo } from '@/types/post'
 
-const route = useRoute()
-const blogStore = useBlogStore()
-const post = blogStore.getPostById(route.params.id as string)
+const post = ref<PostInfo>()
 </script>

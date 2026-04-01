@@ -29,7 +29,7 @@ export default {
         success: '#16a34a',
       },
       backgroundImage: {
-        noise: "url('https://grainy-gradients.vercel.app/noise.svg')",
+        noise: "url('@/assets/home.png')",
         'grid-pattern': 'radial-gradient(circle, #737373 1px, transparent 1px)',
       },
       animation: {
