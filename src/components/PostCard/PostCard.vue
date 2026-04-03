@@ -1,11 +1,11 @@
 <template>
   <!-- 文章卡片 1 -->
-  <article class="group cursor-pointer">
+  <article class="group cursor-pointer" @click="goToPostDetail(post.id)">
     <!-- 封面图容器，带溢出隐藏和比例 -->
     <div class="overflow-hidden aspect-[4/3] bg-gray-100 mb-6">
       <img
-        src=""
-        class="w-full h-full object-cover grayscale opacity-90 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 ease-out"
+        :src="post.cover"
+        class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 ease-out"
       />
     </div>
 
@@ -50,8 +50,16 @@
 </template>
 <script setup lang="ts">
 import type { PostInfo } from '@/types/post'
+import { useRouter } from 'vue-router'
 
 defineProps<{
   post: PostInfo
 }>()
+
+const router = useRouter()
+
+// 前往文章详情
+const goToPostDetail = (postId: number) => {
+  router.push(`/post/${postId}`)
+}
 </script>

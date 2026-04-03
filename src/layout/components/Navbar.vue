@@ -1,18 +1,16 @@
 <template>
+  <!-- 下翻时隐藏到顶部 -->
+
   <nav
-    class="w-full mx-auto fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-smooth"
-    :class="[
-      isScrolled
-        ? 'bg-white/90 dark:bg-primary-950/90 py-2 border-b border-primary-200 dark:border-primary-800'
-        : 'bg-transparent py-8',
-    ]"
+    class="w-full mx-auto py-4 fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-smooth"
+    :class="[isScrollToBottom ? 'transform -translate-y-full' : '', isTop ? 'bg-transparent shadow-none' : 'bg-white/90 shadow-[0_1px_20px_rgba(0,0,0,0.1)]']"
   >
     <div class="lg:px-12 max-w-7xl mx-auto">
       <div class="flex justify-between items-center">
         <!-- Logo: Asymmetric & Industrial -->
         <router-link to="/" class="group flex items-center gap-4">
           <div
-            class="text-2xl font-bold tracking-wider transition-all duration-300 ease-smooth hover:text-accent group-hover:-translate-y-1"
+            class="text-2xl font-bold tracking-wider transition-all duration-300 ease-smooth"
           >
             老铁匠
           </div>
@@ -105,7 +103,8 @@ import {
 const router = useRouter()
 const isDark = ref(false)
 const isMobileMenuOpen = ref(false)
-const isScrolled = ref(false)
+const isTop = ref(true)
+const isScrollToBottom = ref(false)
 
 const toggleDarkMode = () => {
   isDark.value = !isDark.value
@@ -134,9 +133,18 @@ onMounted(() => {
     isDark.value = true
     document.documentElement.classList.add('dark')
   }
+  let lastScrollY = window.scrollY
 
-  window.addEventListener('scroll', () => {
-    isScrolled.value = window.scrollY > 20
-  })
+  const onScroll = () => {
+    const currentScrollY = window.scrollY
+    isTop.value = currentScrollY == 0
+    if (currentScrollY > lastScrollY) {
+      isScrollToBottom.value = true
+    } else {
+      isScrollToBottom.value = false
+    }
+    lastScrollY = currentScrollY
+  }
+  window.addEventListener('scroll', onScroll)
 })
 </script>

@@ -1,19 +1,16 @@
 <template>
-  <div v-if="post" class="pt-32 pb-40 animate-fade-in relative">
-    <!-- Back to Articles -->
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-      <router-link
-        to="/posts"
-        class="inline-flex items-center text-slate-500 hover:text-primary-500 transition-colors font-medium group"
-      >
-        <ArrowLeftIcon
-          class="w-5 h-5 mr-3 group-hover:-translate-x-2 transition-transform"
-        />
-        返回文章列表
-      </router-link>
+  <div v-if="post" class="animate-fade-in relative">
+    <!-- 顶部封面 -->
+    <div
+      class="w-full h-[400px] mx-auto mb-20 animate-fade-in animation-delay-400 bg-black overflow-hidden"
+    >
+      <img
+        :src="post.cover"
+        :alt="post.title"
+        class="w-full h-full object-cover"
+      />
     </div>
-
-    <!-- Article Header -->
+    <!-- 文章头部 -->
     <header class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center">
       <div class="mb-4 flex justify-center flex-wrap gap-2 animate-slide-up">
         <span class="tag">
@@ -21,10 +18,10 @@
         </span>
         <span
           v-for="tag in post.tags"
-          :key="tag"
+          :key="tag.id"
           class="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-slate-400"
         >
-          #{{ tag }}
+          #{{ tag.name }}
         </span>
       </div>
 
@@ -43,31 +40,25 @@
         </div>
         <div class="flex items-center">
           <CalendarIcon class="w-5 h-5 mr-2" />
-          {{ post.publishedAt }}
+          {{ post.createdAt }}
         </div>
         <div class="flex items-center">
           <ClockIcon class="w-5 h-5 mr-2" />
-          {{ post.readMinutes }} min read
+          {{ post.readingTime }} 分钟阅读
         </div>
       </div>
     </header>
-
-    <!-- Thumbnail Banner -->
-    <div
-      class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 animate-fade-in animation-delay-400"
-    >
-      <div
-        class="aspect-[21/9] rounded-[3rem] overflow-hidden shadow-2xl relative"
+    <!-- 返回文章列表 -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+      <router-link
+        to="/posts"
+        class="inline-flex items-center text-slate-500 hover:text-primary-500 transition-colors font-medium group"
       >
-        <img
-          :src="post.thumbnailUrl"
-          :alt="post.title"
-          class="w-full h-full object-cover"
+        <ArrowLeftIcon
+          class="w-5 h-5 mr-3 group-hover:-translate-x-2 transition-transform"
         />
-        <div
-          class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"
-        ></div>
-      </div>
+        返回文章列表
+      </router-link>
     </div>
 
     <!-- Article Body -->
@@ -90,7 +81,7 @@
                 class="flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:text-primary-500 transition-colors"
               >
                 <BookmarkIcon class="w-5 h-5" />
-                收藏笔记
+                点赞
               </button>
               <button
                 class="flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:text-primary-500 transition-colors"
@@ -124,9 +115,6 @@
             />
             <div class="text-center sm:text-left space-y-3">
               <div class="text-xl font-bold dark:text-white">作者：铁匠</div>
-              <p class="text-slate-500 dark:text-slate-400">
-                一个热爱生活的开发者。专注于研究高效的前端技术解决方案，并乐于分享自己在每一个项目中的实战心得。
-              </p>
             </div>
           </div>
         </footer>
@@ -153,8 +141,25 @@ import {
   ShareIcon,
   BookmarkIcon,
 } from '@heroicons/vue/24/outline'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import type { PostInfo } from '@/types/post'
+import { getPostDetailApi } from '@/api/modules/posts'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const post = ref<PostInfo>()
+
+onMounted(async () => {
+  const postId = route.params.id
+  try {
+    const res = await getPostDetailApi(Number(postId))
+    console.log(res)
+
+    post.value = res
+    console.log(post.value)
+  } catch (error) {
+    console.log(error)
+  }
+})
 </script>
