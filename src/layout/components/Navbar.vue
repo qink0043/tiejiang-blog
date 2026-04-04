@@ -1,9 +1,13 @@
 <template>
   <!-- 下翻时隐藏到顶部 -->
-
   <nav
-    class="w-full mx-auto py-4 fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-smooth"
-    :class="[isScrollToBottom ? 'transform -translate-y-full' : '', isTop ? 'bg-transparent shadow-none' : 'bg-white/90 shadow-[0_1px_20px_rgba(0,0,0,0.1)]']"
+    class="w-full mx-auto py-4 fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-smooth font-Moon"
+    :class="[
+      isScrollToBottom ? 'transform -translate-y-full' : '',
+      isTop
+        ? 'bg-transparent shadow-none text-white'
+        : 'bg-white/90 dark:bg-primary-950/90 shadow-[0_1px_20px_rgba(0,0,0,0.1)] dark:shadow-[0_1px_20px_rgba(0,0,0,0.5)]',
+    ]"
   >
     <div class="lg:px-12 max-w-7xl mx-auto">
       <div class="flex justify-between items-center">
@@ -23,12 +27,7 @@
               v-for="link in navLinks"
               :key="link.path"
               :to="link.path"
-              class="text-xs font-black tracking-widest transition-all duration-300 ease-smooth hover:text-accent transform hover:-translate-y-1"
-              :class="[
-                router.currentRoute.value.path === link.path
-                  ? 'text-accent'
-                  : 'text-primary-950 dark:text-primary-100',
-              ]"
+              class="text-base font-black tracking-widest transition-all duration-300 ease-smooth hover:text-accent transform hover:-translate-y-1"
             >
               {{ link.name }}
             </router-link>
@@ -46,7 +45,7 @@
             />
             <MoonIcon
               v-else
-              class="w-4 h-4 text-primary-600 transition-transform group-hover:-rotate-12"
+              class="w-4 h-4 text-primary-600 dark:text-primary-400 transition-transform group-hover:-rotate-12"
             />
           </button>
         </div>
@@ -58,7 +57,10 @@
             class="w-10 h-10 border border-primary-200 dark:border-primary-800 flex items-center justify-center"
           >
             <SunIcon v-if="isDark" class="w-4 h-4 text-accent" />
-            <MoonIcon v-else class="w-4 h-4" />
+            <MoonIcon
+              v-else
+              class="w-4 h-4 text-primary-600 dark:text-primary-400"
+            />
           </button>
           <button
             @click="isMobileMenuOpen = !isMobileMenuOpen"
@@ -74,7 +76,7 @@
     <!-- Mobile menu: Raw Style -->
     <div
       v-if="isMobileMenuOpen"
-      class="md:hidden animate-reveal bg-white dark:bg-primary-950 border-t border-primary-950 dark:border-white mt-2"
+      class="md:hidden animate-reveal bg-white/95 dark:bg-primary-950/95 backdrop-blur-md border-t border-primary-950 dark:border-white mt-2"
     >
       <div class="flex flex-col p-6 space-y-6">
         <router-link
@@ -82,7 +84,7 @@
           :key="link.path"
           :to="link.path"
           @click="isMobileMenuOpen = false"
-          class="text-4xl font-black italic uppercase tracking-tighter"
+          class="text-4xl font-black italic uppercase tracking-tighter text-primary-950 dark:text-white"
         >
           {{ link.name }}
         </router-link>
@@ -92,7 +94,6 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import {
   SunIcon,
   MoonIcon,
@@ -100,7 +101,6 @@ import {
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
 
-const router = useRouter()
 const isDark = ref(false)
 const isMobileMenuOpen = ref(false)
 const isTop = ref(true)
@@ -118,10 +118,10 @@ const toggleDarkMode = () => {
 }
 
 const navLinks = [
-  { name: '[ 首页 ]', path: '/' },
-  { name: '[ 博客 ]', path: '/posts' },
-  { name: '[ 留言板 ]', path: '/message' },
-  { name: '[ 关于 ]', path: '/about' },
+  { name: '首页', path: '/' },
+  { name: '博客', path: '/posts' },
+  { name: '留言板', path: '/message' },
+  { name: '关于', path: '/about' },
 ]
 
 onMounted(() => {
@@ -137,7 +137,7 @@ onMounted(() => {
 
   const onScroll = () => {
     const currentScrollY = window.scrollY
-    isTop.value = currentScrollY == 0
+    isTop.value = currentScrollY < 200
     if (currentScrollY > lastScrollY) {
       isScrollToBottom.value = true
     } else {

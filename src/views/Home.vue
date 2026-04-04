@@ -1,6 +1,6 @@
 <template>
-  <div class="px-6 lg:px-12 py-12 space-y-40">
-    <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end pt-20">
+  <div class="px-6 lg:px-12 space-y-40">
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
       <div class="lg:col-span-8 space-y-8 animate-reveal">
         <div class="max-w-xl space-y-6">
           <p

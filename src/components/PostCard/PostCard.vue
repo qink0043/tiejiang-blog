@@ -49,10 +49,13 @@
   </article>
 </template>
 <script setup lang="ts">
+import { useLayoutStore } from '@/stores/layout'
 import type { PostInfo } from '@/types/post'
 import { useRouter } from 'vue-router'
 
-defineProps<{
+const layoutStore = useLayoutStore()
+
+const props = defineProps<{
   post: PostInfo
 }>()
 
@@ -61,5 +64,6 @@ const router = useRouter()
 // 前往文章详情
 const goToPostDetail = (postId: number) => {
   router.push(`/post/${postId}`)
+  layoutStore.setTopBgImage(props.post.cover)
 }
 </script>

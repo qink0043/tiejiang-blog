@@ -1,15 +1,7 @@
 <template>
   <div v-if="post" class="animate-fade-in relative">
     <!-- 顶部封面 -->
-    <div
-      class="w-full h-[400px] mx-auto mb-20 animate-fade-in animation-delay-400 bg-black overflow-hidden"
-    >
-      <img
-        :src="post.cover"
-        :alt="post.title"
-        class="w-full h-full object-cover"
-      />
-    </div>
+
     <!-- 文章头部 -->
     <header class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center">
       <div class="mb-4 flex justify-center flex-wrap gap-2 animate-slide-up">
@@ -141,25 +133,53 @@ import {
   ShareIcon,
   BookmarkIcon,
 } from '@heroicons/vue/24/outline'
-import { onMounted, ref } from 'vue'
+import { ref, watch, onUnmounted } from 'vue'
 import type { PostInfo } from '@/types/post'
 import { getPostDetailApi } from '@/api/modules/posts'
 import { useRoute } from 'vue-router'
+import { useLayoutStore } from '@/stores/layout'
 
 const route = useRoute()
+const layoutStore = useLayoutStore()
 
 const post = ref<PostInfo>()
+const postId = ref(route.params.id)
 
-onMounted(async () => {
-  const postId = route.params.id
+// 获取文章详情
+const fetchPostDetail = async (postId: string) => {
   try {
     const res = await getPostDetailApi(Number(postId))
     console.log(res)
 
     post.value = res
     console.log(post.value)
+
+    // 设置顶部封面图片
+    if (post.value?.cover && layoutStore.topBgImage !== post.value?.cover) {
+      layoutStore.setTopBgImage(post.value.cover)
+    }
   } catch (error) {
     console.log(error)
   }
+}
+
+// 监听路由参数变化
+watch(
+  () => route.params.id,
+  async (newId, oldId) => {
+    if (newId !== oldId) {
+      console.log('newId', newId)
+      console.log('oldId', oldId)
+
+      postId.value = newId
+      await fetchPostDetail(newId as string)
+    }
+  },
+  { immediate: true },
+)
+
+onUnmounted(() => {
+  // 清除封面图片，避免影响其他页面
+  layoutStore.clearTopBgImage()
 })
 </script>

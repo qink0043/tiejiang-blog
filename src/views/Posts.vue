@@ -93,13 +93,9 @@ import PostCard from '@/components/PostCard/PostCard.vue'
 const postList = ref<PostInfo[]>()
 
 onMounted(async () => {
-  console.log('列表组件挂载')
-
   try {
     const res = await getPostsListApi({})
-
     postList.value = res.items
-    console.log(postList.value)
   } catch {}
 })
 </script>
