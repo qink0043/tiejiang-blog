@@ -4,7 +4,10 @@ export interface PostInfo {
   summary: string
   cover: string
   content: string
-  author: string
+  authorInfo: {
+    id: number
+    username: string
+  }
   category: string
   tags: PostTagInfo[]
   createdAt: string

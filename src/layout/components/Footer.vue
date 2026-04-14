@@ -25,22 +25,25 @@
 
         <div class="flex items-center space-x-6">
           <a
-            href="#"
+            href="https://github.com/qink0043"
+            target="_blank"
             class="text-slate-400 hover:text-primary-500 transition-colors"
           >
             Github
           </a>
           <a
-            href="#"
+            href="https://twitter.com/qink0043"
+            target="_blank"
             class="text-slate-400 hover:text-primary-500 transition-colors"
           >
             Twitter X
           </a>
           <a
-            href="#"
+            href="https://space.bilibili.com/500475475"
+            target="_blank"
             class="text-slate-400 hover:text-primary-500 transition-colors"
           >
-            RSS
+            bilibili
           </a>
         </div>
       </div>

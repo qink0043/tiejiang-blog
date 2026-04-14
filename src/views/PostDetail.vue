@@ -28,7 +28,7 @@
       >
         <div class="flex items-center">
           <UserIcon class="w-5 h-5 mr-2" />
-          {{ post.author }}
+          {{ post.authorInfo?.username }}
         </div>
         <div class="flex items-center">
           <CalendarIcon class="w-5 h-5 mr-2" />
@@ -106,7 +106,7 @@
               class="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-slate-800 shadow-lg"
             />
             <div class="text-center sm:text-left space-y-3">
-              <div class="text-xl font-bold dark:text-white">作者：铁匠</div>
+              <div class="text-xl font-bold dark:text-white">作者：老铁匠</div>
             </div>
           </div>
         </footer>
